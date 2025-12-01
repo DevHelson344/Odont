@@ -1,24 +1,12 @@
 import { useState, useEffect } from 'react'
 
-// Detecta automaticamente a URL da API
-const getApiBase = () => {
-  // 1. Tenta usar variável de ambiente
-  if (import.meta.env.VITE_API_URL) {
-    return `${import.meta.env.VITE_API_URL}/api`
-  }
-  
-  // 2. Em produção, usa URL relativa (proxy)
-  if (import.meta.env.PROD) {
-    return '/api'
-  }
-  
-  // 3. Em desenvolvimento, usa localhost
-  return 'http://localhost:3002/api'
-}
-
-const API_BASE = getApiBase()
+// URL da API - usa Railway em produção, localhost em desenvolvimento
+const API_BASE = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3002/api'
+  : 'https://odont-production.up.railway.app/api'
 
 console.log('🔗 API Base URL:', API_BASE)
+console.log('🌍 Hostname:', window.location.hostname)
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
