@@ -6,10 +6,16 @@ import db from './database.js';
 import { format, addMinutes, isToday, parseISO } from 'date-fns';
 import cron from 'node-cron';
 
-const JWT_SECRET = 'dental-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'dental-secret-key';
 
 const app = express();
-app.use(cors());
+
+// CORS configurado para aceitar requisições da Vercel
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Middleware de autenticação
