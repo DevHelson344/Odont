@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react'
+import { API_CONFIG } from '../config'
 
-// URL da API - usa Railway em produção, localhost em desenvolvimento
-const API_BASE = window.location.hostname === 'localhost' 
-  ? 'http://localhost:3002/api'
-  : 'https://odont-production.up.railway.app/api'
-
-console.log('🔗 API Base URL:', API_BASE)
-console.log('🌍 Hostname:', window.location.hostname)
+const API_BASE = API_CONFIG.baseURL
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
