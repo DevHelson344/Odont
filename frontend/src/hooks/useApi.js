@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 
-const API_BASE = 'http://localhost:3002/api'
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : '/api'
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
