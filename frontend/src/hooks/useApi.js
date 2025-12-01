@@ -1,8 +1,24 @@
 import { useState, useEffect } from 'react'
 
-const API_BASE = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api` 
-  : '/api'
+// Detecta automaticamente a URL da API
+const getApiBase = () => {
+  // 1. Tenta usar variável de ambiente
+  if (import.meta.env.VITE_API_URL) {
+    return `${import.meta.env.VITE_API_URL}/api`
+  }
+  
+  // 2. Em produção, usa URL relativa (proxy)
+  if (import.meta.env.PROD) {
+    return '/api'
+  }
+  
+  // 3. Em desenvolvimento, usa localhost
+  return 'http://localhost:3002/api'
+}
+
+const API_BASE = getApiBase()
+
+console.log('🔗 API Base URL:', API_BASE)
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
